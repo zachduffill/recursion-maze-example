@@ -1,0 +1,14 @@
+.maze-grid {
+    display: grid;
+    aspect-ratio: 1;
+    width: 50%;
+    margin: auto;
+    gap: 5px;
+    
+}
+
+.maze-node {
+    background-color: antiquewhite;
+    height: 50px;
+    width: 50px;
+}
