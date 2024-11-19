@@ -1,10 +1,13 @@
 .maze-grid {
     display: grid;
+
     aspect-ratio: 1;
-    width: 50%;
+    width: fit-content;
+    height: fit-content;
+
     margin: auto;
-    gap: 5px;
-    
+    margin-top: 50px;
+    gap: 5px; 
 }
 
 .maze-node {
