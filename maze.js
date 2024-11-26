@@ -13,10 +13,10 @@ var maze1 = [['#','#','#','#','#','#','#','#'],
             ['#','#','#','#','#','#','#','#']]
 
 const dirs = [
+    [-1,0],
     [0,1],
     [1,0],
     [0,-1],
-    [-1,0],
 ];
 
 var grid;
@@ -113,6 +113,7 @@ async function walk(maze, pos){
 
     path.push(pos);
     if (maze[pos[0]][pos[1]] == " " || maze[pos[0]][pos[1]] == "S"){
+        console.log(pos)
         html_cell.classList.add("maze-cell-path");
     }
 
@@ -130,7 +131,7 @@ async function walk(maze, pos){
 
     for (const d of dirs){
         await sleep(100);
-        if (await walk(maze,[pos[0]+d[1],pos[1]+d[0]])){
+        if (await walk(maze,[pos[0]+d[0],pos[1]+d[1]])){
             return true; 
         }
     }
