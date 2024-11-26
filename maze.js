@@ -103,20 +103,18 @@ function pos_to_idx(maze, pos){
     return pos[0]*maze[pos[0]].length+pos[1];
 }
 
-function walk(maze, pos){
+async function walk(maze, pos){
     if (seen.some(seenPos => seenPos[0] === pos[0] && seenPos[1] === pos[1])) {
         return false; } 
     else {
         seen.push(pos); }
 
-    var html_cell = html_grid.children[pos_to_idx(maze,pos)]
+    var html_cell = html_grid.children[await pos_to_idx(maze,pos)]
 
     path.push(pos);
     if (maze[pos[0]][pos[1]] == " " || maze[pos[0]][pos[1]] == "S"){
         html_cell.classList.add("maze-cell-path");
     }
-
-    //await sleep(500);
 
     if (pos[1] < 0 || pos[1] >= maze[0].length || pos[0] < 0 || pos[0] >= maze.length){
         path.pop();
@@ -131,7 +129,8 @@ function walk(maze, pos){
     }
 
     for (const d of dirs){
-        if (walk(maze,[pos[0]+d[1],pos[1]+d[0]])){
+        await sleep(100);
+        if (await walk(maze,[pos[0]+d[1],pos[1]+d[0]])){
             return true; 
         }
     }
