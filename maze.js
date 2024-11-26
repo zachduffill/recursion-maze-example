@@ -6,8 +6,8 @@ const end = "E";
 var maze1 = [['#','#','#','#','#','#','#','#'],
             ['#',' ','#',' ','E','#',' ','#'],
             ['#',' ','#',' ','#','#',' ','#'],
-            ['#',' ',' ',' ','#',' ',' ','#'],
-            ['#','#',' ','#','#',' ','#','#'],
+            ['#',' ',' ',' ',' ',' ',' ','#'],
+            ['#','#','#','#','#',' ','#','#'],
             ['#',' ',' ','#',' ',' ',' ','#'],
             ['#','S',' ',' ',' ','#',' ','#'],
             ['#','#','#','#','#','#','#','#']]
@@ -113,7 +113,6 @@ async function walk(maze, pos){
 
     path.push(pos);
     if (maze[pos[0]][pos[1]] == " " || maze[pos[0]][pos[1]] == "S"){
-        console.log(pos)
         html_cell.classList.add("maze-cell-path");
     }
 
@@ -130,7 +129,15 @@ async function walk(maze, pos){
     }
 
     for (const d of dirs){
-        await sleep(100);
+        html_cell.children[0].classList.remove('fa-arrow-up','fa-arrow-right','fa-arrow-down','fa-arrow-left');
+        console.log(html_cell.children[0].classList);
+        
+        if (d[0] == -1) html_cell.children[0].classList.add('fa-arrow-up');
+        else if (d[1] == 1) html_cell.children[0].classList.add('fa-arrow-right');
+        else if (d[0] == 1) html_cell.children[0].classList.add('fa-arrow-down');
+        else if (d[1] == -1) html_cell.children[0].classList.add('fa-arrow-left');
+
+        await sleep(500);
         if (await walk(maze,[pos[0]+d[0],pos[1]+d[1]])){
             return true; 
         }
@@ -138,6 +145,7 @@ async function walk(maze, pos){
 
     path.pop()
     html_cell.classList.remove("maze-cell-path");
+    html_cell.children[0].classList.remove('fa-arrow-up','fa-arrow-right','fa-arrow-down','fa-arrow-left');
     return false
 }
 
@@ -160,6 +168,6 @@ function setGridSize(size){
     html_grid.style.gridTemplateRows = "repeat("+grid_size+", 50px)"
     html_grid.style.gridTemplateColumns = "repeat("+grid_size+", 50px)"
 
-    html_grid.innerHTML = '<div class="maze-cell"></div>'.repeat(grid_size**2);
+    html_grid.innerHTML = '<div class="maze-cell"><i class="fa-solid"></i></div>'.repeat(grid_size**2);
 }
 
