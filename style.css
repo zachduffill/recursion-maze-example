@@ -34,6 +34,10 @@
     color: white;
 }
 
+.maze-cell-path {
+    background-color: rgb(166, 194, 170);;
+}
+
 i {
     margin: auto;
     font-size: 20px;

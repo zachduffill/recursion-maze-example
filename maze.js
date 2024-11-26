@@ -32,7 +32,9 @@ $(document).ready(function () {
     generate(8,100);
 });
 
-const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+function sleep(ms = 0) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function getCellType(pos){
     return grid[pos.y][pos.x];
@@ -82,25 +84,24 @@ function generate(size, anim_speed=0){
 
     for (let r = 0; r < maze.length; r++){
         for (let c = 0; c < maze[r].length; c++){
-            var bgClass;
-            const cell = JSON.stringify(maze[r][c]);
+            var html_cell = html_grid.children[pos_to_idx(maze,[r,c])]
+
             if (maze[r][c] == wall) {
-                bgClass = "maze-cell-wall";
+                html_cell.classList.add("maze-cell-wall");
             }
             else if (maze[r][c] == end) {
-                bgClass = "maze-cell-end";
-                html_grid.children[r*maze[r].length+c].innerHTML = '<i class="fa-solid fa-person-walking-arrow-right"></i>';
+                html_cell.classList.add("maze-cell-end");
+                html_cell.innerHTML = '<i class="fa-solid fa-person-walking-arrow-right"></i>';
             }
-            else {
-                bgClass = null;
-            }
-
-            if (bgClass) html_grid.children[r*maze[r].length+c].classList.add(bgClass);
         }
     }
 }
 
 ///////////////////////////////////
+
+function pos_to_idx(maze, pos){
+    return pos[0]*maze[pos[0]].length+pos[1];
+}
 
 function walk(maze, pos){
     if (seen.some(seenPos => seenPos[0] === pos[0] && seenPos[1] === pos[1])) {
@@ -108,7 +109,14 @@ function walk(maze, pos){
     else {
         seen.push(pos); }
 
+    var html_cell = html_grid.children[pos_to_idx(maze,pos)]
+
     path.push(pos);
+    if (maze[pos[0]][pos[1]] == " " || maze[pos[0]][pos[1]] == "S"){
+        html_cell.classList.add("maze-cell-path");
+    }
+
+    //await sleep(500);
 
     if (pos[1] < 0 || pos[1] >= maze[0].length || pos[0] < 0 || pos[0] >= maze.length){
         path.pop();
@@ -129,6 +137,7 @@ function walk(maze, pos){
     }
 
     path.pop()
+    html_cell.classList.remove("maze-cell-path");
     return false
 }
 
