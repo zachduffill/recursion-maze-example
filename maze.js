@@ -40,11 +40,24 @@ var grid_size;
 var html_code;
 var last_idx_highlighted;
 
+var checkbox_manual;
+var manual_mode = false;
+
 var anim_speed = 200;
 
 $(document).ready(function () {
     html_grid = document.getElementById("maze-grid");
     html_code = document.getElementById("code");
+    checkbox_manual = document.getElementById("cb-manual")
+
+    checkbox_manual.addEventListener("change", (event) => {
+        if (event.target.checked) {
+            console.log("yes");
+            manual_mode = true;
+        } else {
+            manual_mode = false;
+        }
+      });
 
     generate(10);
 });
@@ -94,6 +107,8 @@ async function highlight_code(idx){
     if (last_idx_highlighted) html_code.children[last_idx_highlighted].classList.remove("code-currentline");
     html_code.children[idx].classList.add("code-currentline");
     last_idx_highlighted = idx;
+    if (manual_mode) while (next === false) await sleep(50);
+    next = false;
     await sleep(anim_speed);
 }
 
@@ -189,3 +204,7 @@ function setGridSize(size){
     html_grid.innerHTML = '<div class="maze-cell"><i class="fa-solid"></i></div>'.repeat(grid_size**2);
 }
 
+
+function code_nextline(){
+    next=true;
+}
