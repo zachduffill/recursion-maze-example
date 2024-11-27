@@ -64,6 +64,23 @@ i {
     white-space: pre;
 }
 
+#code > div {
+    margin-top: max(6%,5px);
+    margin-left: max(2%,2px);
+    
+    display: flex;
+    flex-direction: row;
+    gap: max(5%,2px);
+}
+
+#code > div > button > p {
+    margin: auto;
+}
+
+#code > div > div {
+    margin: auto 0;
+}
+
 .code-currentline {
     background-color: green;
     color: white;
