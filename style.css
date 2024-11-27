@@ -3,6 +3,7 @@ body {
     grid-template-rows: 100%;
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 20px;
+    margin: 50px;
 }
 
 .maze-grid {
@@ -15,7 +16,6 @@ body {
     height: fit-content;
 
     margin: auto;
-    margin-top: 50px;
     gap: 5px; 
 }
 
@@ -50,4 +50,16 @@ body {
 i {
     margin: auto;
     font-size: 20px;
+}
+
+#code {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+}
+
+#code h3 {
+    font-family:'Courier New', Courier, monospace;
+    margin: 5px;
+    white-space: pre;
 }

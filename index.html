@@ -10,6 +10,32 @@
     <script src="maze.js"></script>
 </head>
 <body>
+    <div id="code">
+        <h3>function walk(maze, position):</h3>
+        <h3>    if (position in seen):</h3>
+        <h3>        return False</h3>
+        <h3>    else:</h3>
+        <h3>        seen.append(position)</h3>
+        <h3>        path.append(position)</h3>
+        <h3>    </h3>
+        <h3>    if (IsPositionOffGrid()):</h3>
+        <h3>        path.pop()</h3>
+        <h3>        return False</h3>
+        <h3>    </h3>
+        <h3>    if (maze[position] == wall):</h3>
+        <h3>        path.pop()</h3>
+        <h3>        return False</h3>
+        <h3>    </h3>
+        <h3>    if (maze[position] == end):</h3>
+        <h3>        return True</h3>
+        <h3>    </h3>
+        <h3>    foreach (cell_position in neighbouring_cells):</h3>
+        <h3>        if (walk(maze, cell_position) == True):</h3>
+        <h3>            return True</h3>
+        <h3>    </h3>
+        <h3>    path.pop()</h3>
+        <h3>    return False</h3>
+    </div>
     <div class="maze-grid" id="maze-grid">
     </div>
 </body>
