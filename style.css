@@ -44,7 +44,7 @@ body {
 }
 
 .maze-cell-path {
-    background-color: rgb(166, 183, 194);;
+    background-color: rgb(166, 183, 194);
 }
 
 i {
@@ -62,4 +62,13 @@ i {
     font-family:'Courier New', Courier, monospace;
     margin: 5px;
     white-space: pre;
+}
+
+.code-currentline {
+    background-color: green;
+    color: white;
+}
+
+.current-cell {
+    background-color: rgb(153, 187, 156);
 }

@@ -37,10 +37,16 @@ var seen;
 var html_grid;
 var grid_size;
 
+var html_code;
+var last_idx_highlighted;
+
+var anim_speed = 200;
+
 $(document).ready(function () {
     html_grid = document.getElementById("maze-grid");
+    html_code = document.getElementById("code");
 
-    generate(10,100);
+    generate(10);
 });
 
 function sleep(ms = 0) {
@@ -58,38 +64,8 @@ function posToHtmlCell(pos){
 
 //////////////////////////////////
 
-// async function gen_walk(pos, anim_speed=0){
-//     if (pos.x < 0 || pos.y < 0){
-//         return false;
-//     }
-//     if (pos.x >= grid_size || pos.y >= grid_size){
-//         return false;
-//     }
-//     if (seen[pos.x][pos.y]){
-//         return false;
-//     }
-
-//     seen[pos.x][pos.y] = true;
-//     posToHtmlCell(pos).style.backgroundColor = "blue";
-
-//     for (let d of dir){
-//         await sleep(anim_speed);
-//         console.log(d);
-//         if (await gen_walk({x:pos.x+d[0], y:pos.y+d[1]}, anim_speed)){
-//             return true;
-//         }
-//     }
-// }
-
-function generate(size, anim_speed=0){
+function generate(size){
     setGridSize(size);
-
-    // grid = Array.from({ length: size }, () => new Array(size).fill(""));
-    // seen = Array.from({ length: size }, () => new Array(size).fill(false));
-
-    // if (gen_walk({x:0, y:0}, anim_speed)){
-    //     console.log("done");
-    // }
 
     maze = maze2;
 
@@ -114,31 +90,58 @@ function pos_to_idx(maze, pos){
     return pos[0]*maze[pos[0]].length+pos[1];
 }
 
-async function walk(maze, pos){
-    if (seen.some(seenPos => seenPos[0] === pos[0] && seenPos[1] === pos[1])) {
-        return false; } 
-    else {
-        seen.push(pos); }
+async function highlight_code(idx){
+    if (last_idx_highlighted) html_code.children[last_idx_highlighted].classList.remove("code-currentline");
+    html_code.children[idx].classList.add("code-currentline");
+    last_idx_highlighted = idx;
+    await sleep(anim_speed);
+}
 
-    var html_cell = html_grid.children[await pos_to_idx(maze,pos)]
+async function walk(maze, pos){
+    var html_cell = html_grid.children[await pos_to_idx(maze,pos)];
+    html_cell.classList.add("current-cell");
+
+    await highlight_code(1);
+    if (seen.some(seenPos => seenPos[0] === pos[0] && seenPos[1] === pos[1])) {
+        await highlight_code(2);
+        html_cell.classList.remove("current-cell");
+        return false; 
+    } 
+    else {
+        await highlight_code(3);
+        await highlight_code(4);
+        await highlight_code(5);
+        seen.push(pos); 
+    }
 
     path.push(pos);
     if (maze[pos[0]][pos[1]] == " " || maze[pos[0]][pos[1]] == "S"){
         html_cell.classList.add("maze-cell-path");
     }
 
+    await highlight_code(7);
     if (pos[1] < 0 || pos[1] >= maze[0].length || pos[0] < 0 || pos[0] >= maze.length){
+        await highlight_code(8);
         path.pop();
+        await highlight_code(9);
+        html_cell.classList.remove("current-cell");
         return false;
     }
+    await highlight_code(11);
     if (maze[pos[0]][pos[1]] == "#"){
+        await highlight_code(12);
         path.pop()
+        await highlight_code(13);
+        html_cell.classList.remove("current-cell");
         return false;
     }
+    await highlight_code(15);
     if (maze[pos[0]][pos[1]] == "E"){
+        await highlight_code(16);
         return true;
     }
 
+    await highlight_code(18);
     for (const d of dirs){
         html_cell.children[0].classList.remove('fa-arrow-up','fa-arrow-right','fa-arrow-down','fa-arrow-left');
         console.log(html_cell.children[0].classList);
@@ -148,15 +151,20 @@ async function walk(maze, pos){
         else if (d[0] == 1) html_cell.children[0].classList.add('fa-arrow-down');
         else if (d[1] == -1) html_cell.children[0].classList.add('fa-arrow-left');
 
-        await sleep(200);
+        await highlight_code(19);
+        html_cell.classList.remove("current-cell");
         if (await walk(maze,[pos[0]+d[0],pos[1]+d[1]])){
+            await highlight_code(20);
             return true; 
         }
     }
 
+    await highlight_code(22);
     path.pop()
     html_cell.classList.remove("maze-cell-path");
     html_cell.children[0].classList.remove('fa-arrow-up','fa-arrow-right','fa-arrow-down','fa-arrow-left');
+    await highlight_code(23);
+    html_cell.classList.remove("current-cell");
     return false
 }
 
