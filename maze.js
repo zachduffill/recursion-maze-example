@@ -144,7 +144,6 @@ async function walk(maze, pos){
     await highlight_code(18);
     for (const d of dirs){
         html_cell.children[0].classList.remove('fa-arrow-up','fa-arrow-right','fa-arrow-down','fa-arrow-left');
-        console.log(html_cell.children[0].classList);
         
         if (d[0] == -1) html_cell.children[0].classList.add('fa-arrow-up');
         else if (d[1] == 1) html_cell.children[0].classList.add('fa-arrow-right');
