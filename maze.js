@@ -12,6 +12,17 @@ var maze1 = [['#','#','#','#','#','#','#','#'],
             ['#','S',' ',' ',' ','#',' ','#'],
             ['#','#','#','#','#','#','#','#']]
 
+var maze2 = [['#','#','#','#','#','#','#','#','#','#'],
+            ['#',' ',' ',' ',' ','#',' ',' ',' ','#'],
+            ['#',' ','#','#','#','#',' ','#',' ','#'],
+            ['#',' ',' ',' ',' ',' ','#','#',' ','#'],
+            ['#',' ',' ','#','#',' ','#','E',' ','#'],
+            ['#','#',' ','#',' ',' ','#','#',' ','#'],
+            ['#',' ',' ',' ',' ',' ',' ','#',' ','#'],
+            ['#',' ','#','#',' ','#',' ','#',' ','#'],
+            ['#',' ','S','#',' ','#',' ',' ',' ','#'],
+            ['#','#','#','#','#','#','#','#','#','#']]
+
 const dirs = [
     [-1,0],
     [0,1],
@@ -29,7 +40,7 @@ var grid_size;
 $(document).ready(function () {
     html_grid = document.getElementById("maze-grid");
 
-    generate(8,100);
+    generate(10,100);
 });
 
 function sleep(ms = 0) {
@@ -80,7 +91,7 @@ function generate(size, anim_speed=0){
     //     console.log("done");
     // }
 
-    maze = maze1;
+    maze = maze2;
 
     for (let r = 0; r < maze.length; r++){
         for (let c = 0; c < maze[r].length; c++){
@@ -137,7 +148,7 @@ async function walk(maze, pos){
         else if (d[0] == 1) html_cell.children[0].classList.add('fa-arrow-down');
         else if (d[1] == -1) html_cell.children[0].classList.add('fa-arrow-left');
 
-        await sleep(500);
+        await sleep(200);
         if (await walk(maze,[pos[0]+d[0],pos[1]+d[1]])){
             return true; 
         }

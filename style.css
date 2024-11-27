@@ -1,4 +1,13 @@
+body {
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 20px;
+}
+
 .maze-grid {
+    grid-column: 2;
+
     display: grid;
 
     aspect-ratio: 1;
